@@ -11,7 +11,7 @@ app.use(morgan('tiny'));
 app.use(express.json({extended: true}));
 
 app.use('/api/auth', require('./routes/auth.routes'));
-app.use('/api/profiles/self', require('./routes/profiles.routes'));
+app.use('/api/profile', require('./routes/profiles.routes'));
 app.use('/api/photo/self', require('./routes/photo.routes'));
 app.use('/api/trucks', require('./routes/trucks.routes'));
 app.use('/api/loads', require('./routes/loads.routes'));

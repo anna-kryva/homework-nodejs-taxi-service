@@ -26,6 +26,13 @@ router.post('/',
 
         const user = await User.findById(shipperId);
 
+        if(!user) {
+          logging('Info', 'User is not found.');
+          return res.status(200).json({
+            status: 'User is not found.',
+          });
+        }
+
         if (user.role != 'shipper') {
           logging('Info', 'User is not a shipper');
           return res.status(400).json({status: 'User is not a shipper'});
