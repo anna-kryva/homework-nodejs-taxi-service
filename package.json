@@ -5,9 +5,7 @@
   "main": "server/app.js",
   "scripts": {
     "start": "node server/app.js",
-    "server": "nodemon server/app.js",
-    "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "server": "nodemon server/app.js"
   },
   "keywords": [
     "express",
