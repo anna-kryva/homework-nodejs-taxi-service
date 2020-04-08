@@ -116,6 +116,7 @@ router.put(
           }
         });
 
+        logging('Info', 'Photo uploaded to S3');
         await User.findByIdAndUpdate(
             userId,
             {
@@ -154,10 +155,11 @@ router.delete('/', auth, async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    const user = await User.findByIdAndUpdate(
-        userId,
-        {photoLink: '', s3Key: ''},
-    );
+    const user = await User.findById(userId);
+    const params = {
+      Bucket: config.get('awsBucketName'),
+      Key: user.s3Key,
+    };
 
     const s3bucket = new AWS.S3({
       accessKeyId: config.get('awsAccessKeyId'),
@@ -165,17 +167,27 @@ router.delete('/', auth, async (req, res) => {
       region: config.get('awsRegion'),
     });
 
-    const params = {
-      Bucket: config.get('awsBucketName'),
-      Key: user.s3Key,
-    };
+    await User.findByIdAndUpdate(
+      userId,
+      {photoLink: '', s3Key: ''},
+    );
+    
+    logging('Info', 'Link deleted');
 
-    s3bucket.deleteObject(params);
-
-    logging('Info', 'Profile photo has been deleted');
-    return res.status(200).json({
-      status: 'Profile photo deleted successfully',
-    });
+    s3bucket.deleteObject(params, (error) => {
+      if (error) {
+        logging('Error', error);
+        return res.status(400).json({
+          status: 'Profile photo has not been deleted',
+        });
+      } else {
+        logging('Info', 'Profile photo has been deleted');
+        return res.status(200).json({
+          status: 'Profile photo deleted successfully',
+        });
+      }
+    }); 
+    
   } catch (e) {
     logging('Error', `User has not deleted photo, ${e}`);
     return res.status(500).json({
