@@ -124,7 +124,21 @@ router.patch(':id/assign',
       }
     });
 
-// PATCH /api/trucks/truckid/unassign
+/**
+* @api {patch} /api/trucks/:id/unassign Unassign truck 
+*      (only when it it in service).
+* @apiName PatchTruck
+* @apiGroup Truck
+*
+* @apiHeader {String} authorization Authorization value.
+* @apiHeaderExample {json} Content-type header example:
+*            { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+*
+* @apiSuccess {String} status Operation status.
+* @apiSuccessExample {json} Success response example:
+*                   {"status": "Truck unassigned successfully"}
+*
+*/
 router.patch('/:id/unassign',
     auth,
     validator(schemas.paramsCheckForm, 'params'),
@@ -154,7 +168,29 @@ router.patch('/:id/unassign',
       }
     });
 
-// PATCH /api/trucks/truckid/update
+/**
+* @api {patch} /api/trucks/:id/update Update truck information (name)
+* (only when it it in service).
+* @apiName PatchTruck
+* @apiGroup Truck
+*
+* @apiHeader {String} authorization Authorization value.
+* @apiHeaderExample {json} Content-type header example:
+*            { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+* @apiHeader {String} content-type Payload content type.
+* @apiHeaderExample {json} Content-type header example:
+*            { "Content-type": "application/json" }
+*
+* @apiParam {String} name Truck's name.
+* @apiParamExample {json} Payload example:
+*              {
+*               "name": "Truck"
+*              }
+* @apiSuccess {String} status Operation status.
+* @apiSuccessExample {json} Success response example:
+*                   {"status": "Truck updated successfully"}
+*
+*/
 router.patch('/:id/update',
     auth,
     contentType,
@@ -201,7 +237,20 @@ router.patch('/:id/update',
     });
 
 
-// DELETE /api/trucks/truckid/
+/**
+* @api {patch} /api/trucks/:id Delete truck (only when it it in service).
+* @apiName DeleteTruck
+* @apiGroup Truck
+*
+* @apiHeader {String} authorization Authorization value.
+* @apiHeaderExample {json} Content-type header example:
+*            { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+*
+* @apiSuccess {String} status Operation status.
+* @apiSuccessExample {json} Success response example:
+*                   {"status": "Truck deleted successfully"}
+*
+*/
 router.delete('/:id',
     auth,
     validator(schemas.paramsCheckForm, 'params'),

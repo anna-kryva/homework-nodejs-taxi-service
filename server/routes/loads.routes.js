@@ -136,8 +136,33 @@ router.get('/',
       }
     });
 
-
-// GET /api/loads/loadId
+/**
+ * @api {get} /api/loads/:id Shipment information.
+ * @apiName GetLoad
+ * @apiGroup Load
+ *
+ * @apiHeader {String} authorization Authorization value.
+ * @apiHeaderExample {json} Content-type header example:
+  *           { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+ *
+ * @apiSuccess {String} status Operation status.
+ * @apiSuccess {Object} status Operation result.
+ * @apiSuccessExample {json} Success response example:
+ *                  {
+ *                     "status": "Success",
+  *                    "_id": "fbawfibaw",
+ *                     "assigned_to": "noifawnfoian",
+ *                     "created_by": "jfnaikfna",
+ *                     "status": "ASSIGNED",
+ *                     "state": "En route to Pick Up",
+ *                     "logs": [{"message": "Load created", 
+ *            time: 12312, "_id": "kjhfks"}],
+*                    "payload": 100,
+ *                     "dimensions": {length: 100, width: 100, height: 100}
+ *                     "...": "..."
+ *                   }
+ *
+ */
 router.get('/:id',
     auth,
     validator(schemas.paramsCheckForm, 'params'),
@@ -199,7 +224,33 @@ router.get('/:id',
     });
 
 
-// PUT /api/loads/loadId/info
+/**
+* @api {get} /api/loads/:id/info Update load information.
+* @apiName PutLoad
+* @apiGroup Load
+*
+* @apiHeader {String} authorization Authorization value.
+* @apiHeaderExample {json} Content-type header example:
+*            { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+* @apiHeader {String} content-type Payload content type.
+* @apiHeaderExample {json} Content-type header example:
+*            { "Content-type": "application/json" }
+*
+* @apiParam {Object} dimensions Dimensions of load.
+* @apiParam {Number} payload Payload of load.
+* @apiParam {String} pickupAddress Pickup address.
+* @apiParam {String} deliveryAddress Delivery address.
+* @apiParamExample {json} Payload example:
+*              {
+*               "dimensions":{length: 100, width: 100, height: 100},
+*               "payload": 100
+*              }
+*
+* @apiSuccess {String} status Operation status.
+* @apiSuccessExample {json} Success response example:
+*                   {"status": "Load information updated successfully."}
+*
+*/
 router.put('/:id/info',
     auth,
     contentType,
@@ -422,8 +473,20 @@ router.patch('/:id/state',
       }
     });
 
-
-// DELETE /api/loads/loadId
+/**
+* @api {delete} /api/loads/:id Update load information.
+* @apiName DeleteLoad
+* @apiGroup Load
+*
+* @apiHeader {String} authorization Authorization value.
+* @apiHeaderExample {json} Content-type header example:
+*            { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+*
+* @apiSuccess {String} status Operation status.
+* @apiSuccessExample {json} Success response example:
+*                   {"status": "Load has been successfully deleted."}
+*
+*/
 router.delete('/:id',
     auth,
     validator(schemas.paramsCheckForm, 'params'),

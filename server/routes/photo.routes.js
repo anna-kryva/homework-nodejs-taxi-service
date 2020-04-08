@@ -17,8 +17,20 @@ const upload = multer({
   storage,
 });
 
-
-// GET /api/photo/self
+/**
+* @api {get} /api/photo Get photo link at AWS.
+* @apiName GetPhoto
+* @apiGroup Photo
+*
+* @apiHeader {String} authorization Authorization value.
+* @apiHeaderExample {json} Content-type header example:
+*            { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+*
+* @apiSuccess {String} photoLink Photo link at AWS.
+* @apiSuccessExample {json} Success response example:
+*                   {"photoLink": "https://s3-us-west-2.amazonaws.com/..."}
+*
+*/
 router.get('/', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId);
@@ -40,8 +52,25 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-
-// PUT /api/photo/self
+/**
+* @api {put} /api/photo Upload photo at AWS.
+* @apiName PutPhoto
+* @apiGroup Photo
+*
+* @apiHeader {String} authorization Authorization value.
+* @apiHeaderExample {json} Content-type header example:
+*            { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+* @apiHeader {String} content-type Payload content type.
+* @apiHeaderExample {json} Content-type header example:
+*            { "Content-type": "multipart/form-data" }
+*
+* @apiParam {File} file Image file.
+*
+* @apiSuccess {String} status Operation status.
+* @apiSuccessExample {json} Success response example:
+*                   {"status": "Profile photo uploaded successfully"}
+*
+*/
 router.put(
     '/',
     contentType,
@@ -97,7 +126,7 @@ router.put(
 
         logging('Info', `The profile photo has been uploaded`);
         res.status(200).json({
-          status: 'Profile photo has been uploaded',
+          status: 'Profile photo uploaded successfully',
         });
       } catch (e) {
         logging('Error', e);
@@ -107,7 +136,20 @@ router.put(
       }
     });
 
-// DELETE /api/photo/self
+/**
+* @api {delete} /api/photo Delete photo from AWS and remove link.
+* @apiName DeletePhoto
+* @apiGroup Photo
+*
+* @apiHeader {String} authorization Authorization value.
+* @apiHeaderExample {json} Content-type header example:
+*            { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+*
+* @apiSuccess {String} status Operation status.
+* @apiSuccessExample {json} Success response example:
+*                   {"status": "Profile photo deleted successfully"}
+*
+*/
 router.delete('/', auth, async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -139,7 +181,7 @@ router.delete('/', auth, async (req, res) => {
 
     logging('Info', 'Profile photo has been deleted');
     res.status(200).json({
-      status: 'Profile photo has been deleted',
+      status: 'Profile photo deleted successfully',
     });
   } catch (e) {
     logging('Error', `User has not deleted photo, ${e}`);

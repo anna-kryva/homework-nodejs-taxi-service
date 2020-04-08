@@ -103,7 +103,24 @@ router.post(
       }
     });
 
-
+/**
+ * @api {post} /api/auth/forgot_password Forgot password (send email) endpoint.
+ * @apiName ForgotPassword
+ * @apiGroup Auth
+ *
+ * @apiHeader {String} content-type Payload content type.
+ * @apiHeaderExample {json} Content-type header example:
+ *            { "Content-type": "application/json" }
+ *
+ * @apiParam {String} email User's email.
+ * @apiParamExample {json} Payload example:
+ *                { "email": "example@gmail.com" }
+ *
+ * @apiSuccess {String} status Operation status.
+ * @apiSuccessExample {json} Success response example:
+ *                  { "status": "The link to reset password has been sent." }
+ *
+ */
 router.post(
     '/forgot_password',
     contentType,
@@ -150,6 +167,20 @@ router.post(
       }
     });
 
+/**
+ * @api {get} /api/auth/reset_password/:userId/:token
+ *       Forgot password (verification) endpoint.
+ * @apiName ForgotPassword
+ * @apiGroup Auth
+ *
+ * @apiSuccess {Object} payload Operation response.
+ * @apiSuccessExample {json} Success response example:
+ *                 {
+ *                   "id": "fbawfibaw",
+ *                   "token": "fnawilfmnaiwngainegnwegneiwngoiwe"
+ *                 }
+ *
+ */
 router.get(
     '/reset_password/:userId/:token',
     validator(schemas.paramsCheckForm, 'params'),
@@ -178,6 +209,28 @@ router.get(
       }
     });
 
+/**
+ * @api {post} /api/auth/reset_password/ Forgot password (reset) endpoint.
+ * @apiName ForgotPassword
+ * @apiGroup Auth
+ *
+ * @apiHeader {String} content-type Payload content type.
+ * @apiHeaderExample {json} Content-type header example:
+ *            { "Content-type": "application/json" }
+ *
+ * @apiParam {String} password User's password.
+ * @apiParam {String} repeat_password Repeat password.
+ * @apiParamExample {json} Payload example:
+ *               {
+ *                 "password": "123456",
+ *                 "repeat_password": "123456"
+ *               }
+ *
+ * @apiSuccess {String} status Operation status.
+ * @apiSuccessExample {json} Success response example:
+ *                  { "status": "Password successfully changed." }
+ *
+ */
 router.post(
     '/reset_password',
     contentType,
