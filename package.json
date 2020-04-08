@@ -38,7 +38,6 @@
     "nodemon": "^2.0.2"
   },
   "apidoc": {
-    "title": "UBER like service app documentation",
-    "url" : "https://github.com/anna-kryva/homework3-nodejs.git"
+    "title": "UBER like service app documentation"
   }
 }
