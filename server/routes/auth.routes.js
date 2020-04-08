@@ -6,6 +6,7 @@ const config = require('config');
 const User = require('../models/User');
 const schemas = require('../validation/auth.schemas');
 
+const contentType = require('../middleware/content.middleware');
 const validator = require('../middleware/schemas.middleware');
 const sendEmail = require('../mailer/sender.mailer');
 
@@ -17,6 +18,7 @@ const router = express.Router();
 // /api/auth/register
 router.post(
     '/register',
+    contentType,
     validator(schemas.signupForm, 'body'),
     async (req, res) => {
       try {
@@ -60,6 +62,7 @@ router.post(
 // /api/auth/login
 router.post(
     '/login',
+    contentType,
     validator(schemas.loginForm, 'body'),
     async (req, res) => {
       try {
@@ -103,6 +106,7 @@ router.post(
 
 router.post(
     '/forgot_password',
+    contentType,
     validator(schemas.emailForm, 'body'),
     async (req, res) => {
       try {
@@ -176,6 +180,7 @@ router.get(
 
 router.post(
     '/reset_password',
+    contentType,
     validator(schemas.passwordForm, 'body'),
     async (req, res) => {
       try {
