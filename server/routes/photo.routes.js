@@ -5,6 +5,8 @@ const AWS = require('aws-sdk');
 
 const logging = require('../logs/log');
 const User = require('../models/User');
+
+const contentType = require('../middleware/content.form.middleware');
 const auth = require('../middleware/auth.middleware');
 
 // eslint-disable-next-line new-cap
@@ -40,7 +42,12 @@ router.get('/', auth, async (req, res) => {
 
 
 // PUT /api/photo/self
-router.put('/', auth, upload.single('file'), async (req, res) => {
+router.put(
+  '/', 
+  contentType, 
+  auth, 
+  upload.single('file'), 
+  async (req, res) => {
   try {
     const userId = req.user.userId;
 

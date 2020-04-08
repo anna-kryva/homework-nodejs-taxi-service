@@ -1,0 +1,18 @@
+const logging = require('../logs/log');
+
+module.exports = (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return next();
+  }
+  
+  const contype = req.headers['content-type'];
+
+  if (!contype || contype.indexOf('multipart/form-data') !== 0) {
+      return res.send(400).json({
+          status: "Incorrect content-type"
+      });
+  }
+
+  logging('Info', 'Content-type approved');
+  next();
+};
