@@ -6,7 +6,7 @@ const config = require('config');
 const User = require('../models/User');
 const schemas = require('../validation/auth.schemas');
 
-const contentType = require('../middleware/content.middleware');
+const contentType = require('../middleware/content.json.middleware');
 const validator = require('../middleware/schemas.middleware');
 const sendEmail = require('../mailer/sender.mailer');
 
