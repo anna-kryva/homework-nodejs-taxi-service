@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
   const contype = req.headers['content-type'];
 
   if (!contype || contype.indexOf('multipart/form-data') !== 0) {
-      return res.send(400).json({
+      return res.status(400).json({
           status: "Incorrect content-type"
       });
   }
