@@ -3,13 +3,13 @@ const Joi = require('@hapi/joi');
 module.exports = {
   signupForm: Joi.object({
     username: Joi.string()
-        .regex(/'^[a-z0-9_-]{2,32}$'/)
+        .regex(/^[a-z0-9_-]{2,32}$/)
         .min(2)
         .max(32)
         .required(),
     email: Joi.string().email({minDomainSegments: 2}),
     password: Joi.string()
-        .regex(/'^[a-zA-Z0-9]{6,128}$'/)
+        .regex(/^[a-zA-Z0-9]{6,128}$/)
         .min(6)
         .max(128)
         .required(),
@@ -20,7 +20,7 @@ module.exports = {
 
   loginForm: Joi.object({
     username: Joi.string()
-        .regex(/'^[a-z0-9_-]{2,32}$'/)
+        .regex(/^[a-z0-9_-]{2,32}$/)
         .min(2)
         .max(32)
         .required(),
@@ -33,7 +33,7 @@ module.exports = {
 
   passwordForm: Joi.object({
     password: Joi.string()
-        .regex(/'^[a-zA-Z0-9]{6,128}$'/)
+        .regex(/^[a-zA-Z0-9]{6,128}$/)
         .min(6)
         .max(128)
         .required(),
