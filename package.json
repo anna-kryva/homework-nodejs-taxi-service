@@ -1,0 +1,38 @@
+{
+  "name": "nodejs-hw3",
+  "version": "1.0.0",
+  "description": " UBER like service app",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "server": "nodemon server/app.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [
+    "express",
+    "react",
+    "mongodb"
+  ],
+  "author": "Anna Kryva <anna120100@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "aws-sdk": "^2.648.0",
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.6",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.4.6"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.19.0",
+    "nodemon": "^2.0.2"
+  }
+}
