@@ -157,7 +157,7 @@ router.get(
         if(!user) {
           logging('Info', 'There is no user.');
           return res.status(400).json({
-            status: 'Email is not registered.',
+            status: 'User is not registered.',
           });
         }
 
@@ -185,7 +185,7 @@ router.post(
         if(!user) {
           logging('Info', 'There is no user.');
           return res.status(400).json({
-            status: 'Email is not registered.',
+            status: 'User is not registered.',
           });
         }
 
