@@ -18,10 +18,10 @@ module.exports = async (loadId) => {
 
     logging('System.Info', 'Looking for truck');
 
-    let updateLogs = [...load.logs];
+    const updateLogs = [...load.logs];
 
     if (!truck) {
-      updateLogs.push({ 
+      updateLogs.push({
         message:
         'Changed status to NEW. There is no appropriate truck',
         time: Date.now(),
@@ -37,7 +37,7 @@ module.exports = async (loadId) => {
 
       logging('System.Info', 'There is no appropriate truck');
       return {
-        state: 'No truck'
+        state: 'No truck',
       };
     }
 
@@ -63,12 +63,12 @@ module.exports = async (loadId) => {
     logging('Info', 'Load is en route');
     return {
       state: 'En route',
-      driverId: truck.assignedTo
+      driverId: truck.assignedTo,
     };
   } catch (e) {
     logging('Error', `Some problems in system, ${e}`);
     return {
-      state: 'Error'
+      state: 'Error',
     };
   }
 };

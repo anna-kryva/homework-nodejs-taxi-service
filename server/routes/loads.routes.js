@@ -26,7 +26,7 @@ router.post('/',
 
         const user = await User.findById(shipperId);
 
-        if(!user) {
+        if (!user) {
           logging('Info', 'User is not found.');
           return res.status(200).json({
             status: 'User is not found.',
@@ -42,7 +42,7 @@ router.post('/',
         const {pickupAddress, deliveryAddress} = req.body;
         const logs = [{
           message: 'Load created',
-          time: Date.now()
+          time: Date.now(),
         }];
 
         const load = new Load({
@@ -51,7 +51,7 @@ router.post('/',
           payload,
           pickupAddress,
           deliveryAddress,
-          logs
+          logs,
         });
 
         await load.save();
@@ -79,17 +79,17 @@ router.get('/',
 
         const user = await User.findById(userId);
 
-        if(!user) {
+        if (!user) {
           logging('Info', 'User is not found.');
           return res.status(200).json({
             status: 'User is not found.',
           });
         }
 
-        if(user.role === 'driver') {
+        if (user.role === 'driver') {
           loads = await Load.find({
-            assignedTo: userId, 
-            status: 'ASSIGNED'
+            assignedTo: userId,
+            status: 'ASSIGNED',
           });
         } else {
           loads = await Load.find({createdBy: userId});
@@ -99,7 +99,7 @@ router.get('/',
           logging('Info', 'List of loads is empty.');
           return res.status(200).json({
             status: 'You do not have any loads yet.',
-            loads: []
+            loads: [],
           });
         }
 
@@ -110,7 +110,7 @@ router.get('/',
             'created_by': load.createdBy,
             'status': load.status,
             'state': load.state,
-            'logs': load.logs,           
+            'logs': load.logs,
             'dimensions': {
               'width': load.dimensions.width,
               'length': load.dimensions.length,
@@ -125,8 +125,8 @@ router.get('/',
 
         logging('Info', 'List of loads has been sent to the shipper.');
         res.status(200).json({
-          status: "Success",
-          "loads": outputLoads
+          'status': 'Success',
+          'loads': outputLoads,
         });
       } catch (e) {
         logging('Error', `Loads have not been sent, ${e}`);
@@ -155,10 +155,10 @@ router.get('/:id',
           });
         }
 
-        if (load.createdBy != userId 
-          || load.assignedTo != userId) {
-            logging('Info', 'Access denied');
-            return res.status(403).json({status: 'Access denied'});
+        if (load.createdBy != userId ||
+          load.assignedTo != userId) {
+          logging('Info', 'Access denied');
+          return res.status(403).json({status: 'Access denied'});
         }
 
         const shipment = {
@@ -188,7 +188,7 @@ router.get('/:id',
         logging('Info', 'Info about the load has been sent');
         res.status(200).json({
           status: 'Success',
-          shipment
+          shipment,
         });
       } catch (e) {
         logging('Error', `Shipment info has not been sent, ${e}`);
@@ -308,11 +308,11 @@ router.patch('/:id/post',
           } else if (truck.state === 'En route') {
             return res.status(200).json({
               status: 'Load posted successfully',
-              assigned_to: truck.driverId 
+              assigned_to: truck.driverId,
             });
           } else {
             return res.status(400).json({
-              status: 'Something went wrong. Try restarting.'
+              status: 'Something went wrong. Try restarting.',
             });
           }
         });
@@ -348,13 +348,13 @@ router.patch('/:id/state',
         if (load.status !== 'ASSIGNED') {
           logging('Info', 'Forbidden to change state');
           return res.status(400).json({
-            status: 'Forbidden to change state'
+            status: 'Forbidden to change state',
           });
         }
-        
+
         let newState;
 
-        switch(load.state) {
+        switch (load.state) {
           case 'Ready to Pick Up':
             newState = 'En route to Pick Up';
             break;
@@ -370,15 +370,15 @@ router.patch('/:id/state',
           case 'Arrived to Delivery':
             newState = null;
             break;
-          default: 
+          default:
             newState = null;
             break;
         }
 
-        if(!newState) {
+        if (!newState) {
           logging(
-            'Info', 
-            'Load is already arrived to delivery'
+              'Info',
+              'Load is already arrived to delivery',
           );
           return res.status(200).json({
             status: 'Load is already arrived to delivery',
@@ -437,7 +437,7 @@ router.delete('/:id',
         if (!previousLoad) {
           logging('Info', 'This load does not exist');
           return res.status(400).json({
-            message: 'This load does not exist'
+            message: 'This load does not exist',
           });
         }
 

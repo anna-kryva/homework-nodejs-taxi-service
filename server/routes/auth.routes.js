@@ -48,7 +48,7 @@ router.post(
         await user.save();
 
         res.status(200).json({
-          status: "User registered successfully",
+          status: 'User registered successfully',
         });
         logging('Info', 'A new user has been created');
       } catch (e) {
@@ -92,8 +92,8 @@ router.post(
 
         logging('Info', `Token to user has been sent`);
         res.status(200).json({
-          status: "User authenticated successfully",
-          token
+          status: 'User authenticated successfully',
+          token,
         });
       } catch (e) {
         logging('Error', 'User has not been authenticated');
@@ -113,7 +113,7 @@ router.post(
         const email = req.body.email;
         const user = await User.findOne({email});
 
-        if(!user) {
+        if (!user) {
           logging('Info', 'There is no user.');
           return res.status(400).json({
             status: 'Email is not registered.',
@@ -158,7 +158,7 @@ router.get(
         const {userId, token} = req.params;
         const user = await User.findById(userId);
 
-        if(!user) {
+        if (!user) {
           logging('Info', 'There is no user.');
           return res.status(400).json({
             status: 'User is not registered.',
@@ -187,7 +187,7 @@ router.post(
         const {userId, token, password} = req.body;
         const user = await User.findById(userId);
 
-        if(!user) {
+        if (!user) {
           logging('Info', 'There is no user.');
           return res.status(400).json({
             status: 'User is not registered.',

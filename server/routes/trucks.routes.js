@@ -1,7 +1,6 @@
 const express = require('express');
 
 const Truck = require('../models/Truck');
-const Load = require('../models/Load');
 const User = require('../models/User');
 const schemas = require('../validation/trucks.schemas');
 
@@ -78,8 +77,8 @@ router.get('/',
 
         logging('Info', 'List of trucks has been sent to the driver.');
         res.status(200).json({
-          status: "Truck created successfully",
-          trucks
+          status: 'Truck created successfully',
+          trucks,
         });
       } catch (e) {
         logging('Error', `Loads have not been sent, ${e}`);
