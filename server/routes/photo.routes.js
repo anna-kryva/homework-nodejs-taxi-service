@@ -154,7 +154,7 @@ router.delete('/', auth, async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    await User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
         userId,
         {photoLink: '', s3Key: ''},
     );
@@ -167,20 +167,13 @@ router.delete('/', auth, async (req, res) => {
 
     const params = {
       Bucket: config.get('awsBucketName'),
-      Key: result.s3Key,
+      Key: user.s3Key,
     };
 
-    s3bucket.deleteObject(params, (error) => {
-      if (error) {
-        logging('Error', `Cannot delete photo from AWS. ${error}`);
-        return res.status(500).json({
-          status: 'Something went wrong. Photo has not been deleted',
-        });
-      }
-    });
+    s3bucket.deleteObject(params);
 
     logging('Info', 'Profile photo has been deleted');
-    res.status(200).json({
+    return res.status(200).json({
       status: 'Profile photo deleted successfully',
     });
   } catch (e) {
