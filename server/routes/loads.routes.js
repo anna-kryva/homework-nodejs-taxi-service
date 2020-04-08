@@ -143,21 +143,21 @@ router.get('/',
  *
  * @apiHeader {String} authorization Authorization value.
  * @apiHeaderExample {json} Content-type header example:
-  *           { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+ *           { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
  *
  * @apiSuccess {String} status Operation status.
  * @apiSuccess {Object} status Operation result.
  * @apiSuccessExample {json} Success response example:
  *                  {
  *                     "status": "Success",
-  *                    "_id": "fbawfibaw",
+ *                    "_id": "fbawfibaw",
  *                     "assigned_to": "noifawnfoian",
  *                     "created_by": "jfnaikfna",
  *                     "status": "ASSIGNED",
  *                     "state": "En route to Pick Up",
  *                     "logs": [{"message": "Load created", 
  *            time: 12312, "_id": "kjhfks"}],
-*                    "payload": 100,
+ *                    "payload": 100,
  *                     "dimensions": {length: 100, width: 100, height: 100}
  *                     "...": "..."
  *                   }

@@ -2,16 +2,42 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const logging = require('../logs/log');
+
 const User = require('../models/User');
 const Truck = require('../models/Truck');
+
 const auth = require('../middleware/auth.middleware');
+const contentType = require('../middleware/content.json.middleware');
 const schemas = require('../validation/profile.schemas');
 const validator = require('../middleware/schemas.middleware');
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
 
-// GET api/profile
+/**
+ * @api {get} /api/profile Profile information.
+ * @apiName GetProfile
+ * @apiGroup Profile
+ *
+ * @apiHeader {String} authorization Authorization value.
+ * @apiHeaderExample {json} Content-type header example:
+ *           { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+ *
+ * @apiSuccess {String} status Operation status.
+ * @apiSuccess {Object} status Operation result.
+ * @apiSuccessExample {json} Success response example:
+ *                  {
+ *                    "status": "Success",
+ *                    "user": 
+ *                     {
+ *                      "email": "anna@gmail.com",
+ *                      "photoLink": "https://s3-us-west-2.amazonaws.com/...",
+ *                      "firstName": "Anna",
+ *                      "lastName": "Kryva",
+ *                      "role": "shipper",
+ *                      }
+ *                   }
+ */
 router.get('/', auth, async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -29,11 +55,11 @@ router.get('/', auth, async (req, res) => {
     res.status(200).json({
       status: 'Success',
       user: {
-        'user.email': user.email,
-        'user.photoLink': user.photoLink,
-        'user.firstName': user.firstName,
-        'user.lastName': user.lastName,
-        'user.role': user.role,
+        'email': user.email,
+        'photoLink': user.photoLink,
+        'firstName': user.firstName,
+        'lastName': user.lastName,
+        'role': user.role,
       },
     });
   } catch (e) {
@@ -44,10 +70,30 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// PATCH api/profile/email
+/**
+ * @api {patch} /api/profile/email Update profile email.
+ * @apiName UpdateEmailProfile
+ * @apiGroup Profile
+ *
+ * @apiHeader {String} authorization Authorization value.
+ * @apiHeaderExample {json} Content-type header example:
+ *           { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+ * @apiHeader {String} content-type Payload content type.
+ * @apiHeaderExample {json} Content-type header example:
+ *            { "Content-type": "application/json" }
+ * 
+ * @apiParam {String} email User's email.
+*  @apiParamExample {json} Payload example:
+*              { "email": "anna@gmail.com" }
+ *
+ * @apiSuccess {String} status Operation status.
+ * @apiSuccessExample {json} Success response example:
+ *                  { "status": "Email updated successfully" }
+ */
 router.patch(
     '/email',
     auth,
+    contentType,
     validator(schemas.updateEmail, 'body'),
     async (req, res) => {
       try {
@@ -84,9 +130,33 @@ router.patch(
       }
     });
 
-// PATCH api/profile/name
+/**
+ * @api {patch} /api/profile/name Update user's name.
+ * @apiName UpdateNameProfile
+ * @apiGroup Profile
+ *
+ * @apiHeader {String} authorization Authorization value.
+ * @apiHeaderExample {json} Content-type header example:
+ *           { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+ * @apiHeader {String} content-type Payload content type.
+ * @apiHeaderExample {json} Content-type header example:
+ *            { "Content-type": "application/json" }
+ * 
+ * @apiParam {String} firstName User's first name.
+ * @apiParam {String} lastName User's last name.
+*  @apiParamExample {json} Payload example:
+*             { 
+                "firstName": "Anna", 
+                "lastName": "Kryva",
+              }
+ *
+ * @apiSuccess {String} status Operation status.
+ * @apiSuccessExample {json} Success response example:
+ *                  { "status": "Name updated successfully" }
+ */
 router.patch(
     '/name',
+    contentType,
     auth,
     validator(schemas.updateName, 'body'),
     async (req, res) => {
@@ -130,10 +200,34 @@ router.patch(
       }
     });
 
-// PATCH api/profile/reset_password
+/**
+ * @api {patch} /api/profile/reset_password Update user's password.
+ * @apiName resetPasswordProfile
+ * @apiGroup Profile
+ *
+ * @apiHeader {String} authorization Authorization value.
+ * @apiHeaderExample {json} Content-type header example:
+ *           { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+ * @apiHeader {String} content-type Payload content type.
+ * @apiHeaderExample {json} Content-type header example:
+ *            { "Content-type": "application/json" }
+ * 
+ * @apiParam {String} password New password.
+ * @apiParam {String} repeat_password Repeat new password.
+*  @apiParamExample {json} Payload example:
+*             { 
+                "password": "qwerty123", 
+                "repeat_password": "qwerty123",
+              }
+ *
+ * @apiSuccess {String} status Operation status.
+ * @apiSuccessExample {json} Success response example:
+ *                  { "status": "Password changed successfully" }
+ */
 router.patch(
     '/reset_password',
     auth,
+    contentType,
     validator(schemas.updatePassword, 'body'),
     async (req, res) => {
       try {
@@ -174,7 +268,19 @@ router.patch(
     });
 
 
-// DELETE api/profile
+/**
+ * @api {delete} /api/profileDelete user.
+ * @apiName DeleteProfile
+ * @apiGroup Profile
+ *
+ * @apiHeader {String} authorization Authorization value.
+ * @apiHeaderExample {json} Content-type header example:
+ *           { "Authorization": "JWT fnawilfmnaiwngainegnwegneiwngoiwe" }
+ *
+ * @apiSuccess {String} status Operation status.
+ * @apiSuccessExample {json} Success response example:
+ *                  { "status": "User account deleted successfully" }
+ */
 router.delete('/', auth, async (req, res) => {
   try {
     const userId = req.user.userId;

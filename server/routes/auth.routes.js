@@ -105,7 +105,7 @@ router.post(
 
 /**
  * @api {post} /api/auth/forgot_password Forgot password (send email) endpoint.
- * @apiName ForgotPassword
+ * @apiName ForgotPasswordEmail
  * @apiGroup Auth
  *
  * @apiHeader {String} content-type Payload content type.
@@ -170,7 +170,7 @@ router.post(
 /**
  * @api {get} /api/auth/reset_password/:userId/:token
  *       Forgot password (verification) endpoint.
- * @apiName ForgotPassword
+ * @apiName ForgotPasswordVerification
  * @apiGroup Auth
  *
  * @apiSuccess {Object} payload Operation response.
@@ -211,7 +211,7 @@ router.get(
 
 /**
  * @api {post} /api/auth/reset_password/ Forgot password (reset) endpoint.
- * @apiName ForgotPassword
+ * @apiName ForgotPasswordReset
  * @apiGroup Auth
  *
  * @apiHeader {String} content-type Payload content type.

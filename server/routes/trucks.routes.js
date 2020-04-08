@@ -125,9 +125,9 @@ router.patch(':id/assign',
     });
 
 /**
-* @api {patch} /api/trucks/:id/unassign Unassign truck 
-*      (only when it it in service).
-* @apiName PatchTruck
+* @api {patch} /api/trucks/:id/unassign 
+*     Unassign truck (only when it it in service).
+* @apiName UnassignTruck
 * @apiGroup Truck
 *
 * @apiHeader {String} authorization Authorization value.
@@ -169,9 +169,9 @@ router.patch('/:id/unassign',
     });
 
 /**
-* @api {patch} /api/trucks/:id/update Update truck information (name)
-* (only when it it in service).
-* @apiName PatchTruck
+* @api {patch} /api/trucks/:id/update 
+*     Update truck information (name) (only when it it in service).
+* @apiName UpdateTruckName
 * @apiGroup Truck
 *
 * @apiHeader {String} authorization Authorization value.
